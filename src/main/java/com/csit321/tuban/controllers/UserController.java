@@ -32,8 +32,8 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    private ResponseEntity<?> login(@RequestBody RegisterUserDto input, @RequestParam Integer id){
-        return userServices.updateUser(id, input);
+    public ResponseEntity<?> updateUser(@RequestParam("id") Integer userId, @RequestBody RegisterUserDto userDto) {
+        return userServices.updateUser(userId, userDto);
     }
 
     @DeleteMapping("/delete")

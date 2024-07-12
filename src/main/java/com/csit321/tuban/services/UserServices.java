@@ -43,6 +43,7 @@ public class UserServices {
         user.setEmail(input.getEmail());
         user.setPassword(input.getPassword());
         user.setPhoneNumber(input.getPhoneNumber());
+        user.setDeleted(false);
         user.setRole(optionalRole.get());
 
         userRepository.save(user);
@@ -85,7 +86,18 @@ public class UserServices {
         userRepository.save(user);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
+    /*
+        public ResponseEntity<?> deleteUser(Integer userId) {
+            Optional<User> optionalUser = userRepository.findById(userId);
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"User not found\"}");
+            }
 
+            User user = optionalUser.get();
+            userRepository.delete(user);
+            return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"User deleted successfully\"}");
+        }
+    */
     public ResponseEntity<?> deleteUser(Integer userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
@@ -93,9 +105,9 @@ public class UserServices {
         }
 
         User user = optionalUser.get();
-        userRepository.delete(user);
-        return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"User deleted successfully\"}");
+        user.setDeleted(true);
+        userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"User safely deleted.\"}");
     }
-
 }
 
