@@ -8,7 +8,6 @@ import org.springframework.web.util.pattern.PathPatternParser;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer  {
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

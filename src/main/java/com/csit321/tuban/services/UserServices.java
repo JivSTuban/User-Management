@@ -1,7 +1,7 @@
 package com.csit321.tuban.services;
 
-import com.csit321.tuban.models.RegisterUserModel;
-import com.csit321.tuban.models.LoginUserModel;
+import com.csit321.tuban.DTOs.RegisterUserDTO;
+import com.csit321.tuban.DTOs.LoginUserDTO;
 import com.csit321.tuban.entities.Role;
 import com.csit321.tuban.entities.RoleEnum;
 import com.csit321.tuban.entities.User;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +28,7 @@ public class UserServices {
         return userRepository.findAll();
     }
 
-    public ResponseEntity<?> signup(RegisterUserModel input) {
+    public ResponseEntity<?> signup(RegisterUserDTO input) {
         try{
             if (userRepository.count() > 0) {
                 if (userRepository.findByEmailAndIsDeletedTrue(input.getEmail()) != null) {
@@ -56,7 +55,7 @@ public class UserServices {
         user.setEmail(input.getEmail());
         user.setPassword(input.getPassword());
         user.setPhoneNumber(input.getPhoneNumber());
-        user.setDeleted(false);
+        user.setIsDeleted(false);
         user.setRole(optionalRole.get());
 
         userRepository.save(user);
@@ -73,7 +72,7 @@ public class UserServices {
         }
     */
 
-    public ResponseEntity<?> login(LoginUserModel userDto) {
+    public ResponseEntity<?> login(LoginUserDTO userDto) {
         User user = userRepository.findByEmailAndIsDeletedTrue(userDto.getEmail());
 
         if (user != null) {
@@ -90,14 +89,14 @@ public class UserServices {
         return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"Login Successful\"}");
     }
 
-    public ResponseEntity<?> updateUser(Integer userId, RegisterUserModel userDto) {
+    public ResponseEntity<?> updateUser(Integer userId, RegisterUserDTO userDto) {
         Optional<User> optionalUser = userRepository.findById(userId);
 
         if (optionalUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"User not found\"}");
         }
 
-        if (optionalUser.get().getDeleted()){
+        if (optionalUser.get().getIsDeleted()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\": \"Cannot Update profile because this user was already deleted\"}");
         }
 
@@ -130,7 +129,7 @@ public class UserServices {
         }
 
         User user = optionalUser.get();
-        user.setDeleted(true);
+        user.setIsDeleted(true);
         userRepository.save(user);
         return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"User deleted\"}");
     }

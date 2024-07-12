@@ -18,17 +18,19 @@ public class CalculatorController {
     public String add(@RequestParam int var1, @RequestParam int var2){
         return "Output: "+(var1+var2);
     }
+
     @GetMapping("/subtract")
     public String subtract(@RequestParam int var1, @RequestParam int var2){
         return "Output: "+(var1-var2);
     }
+
     @GetMapping("/multiply")
     public String multiply(@RequestParam int var1, @RequestParam int var2){
         return "Output: "+(var1*var2);
     }
+
     @GetMapping("/divide")
     public String divide(@RequestParam int var1, @RequestParam int var2){
         return "Output: "+(var1/var2);
     }
-
 }

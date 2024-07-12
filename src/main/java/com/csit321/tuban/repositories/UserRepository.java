@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    public List<User> findAllByIsDeletedFalse();
     public User findByIdAndIsDeletedFalse(Integer id);
     public User findByEmailAndIsDeletedFalse(String email);
     public User findByEmailAndIsDeletedTrue(String email);
