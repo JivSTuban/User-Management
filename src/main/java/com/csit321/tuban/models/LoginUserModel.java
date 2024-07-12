@@ -1,8 +1,8 @@
-package com.csit321.tuban.dtos;
+package com.csit321.tuban.models;
 
 import jakarta.validation.constraints.NotEmpty;
 
-public class LoginUserDto {
+public class LoginUserModel {
     @NotEmpty(message = "Email is required.")
     private String email;
 

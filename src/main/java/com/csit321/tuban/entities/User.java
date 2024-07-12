@@ -14,7 +14,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String username;
+    private String firstName;
+
+    private String lastName;
 
     private String password;
 
@@ -26,7 +28,7 @@ public class User {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String email;
 
     @Column(columnDefinition = "TEXT")
@@ -38,15 +40,7 @@ public class User {
 
     private Boolean isDeleted;
 
-    public Boolean getDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role;
 
@@ -58,16 +52,32 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     public Date getUpdatedAt() {

@@ -1,14 +1,17 @@
-package com.csit321.tuban.dtos;
+package com.csit321.tuban.models;
 
 import jakarta.validation.constraints.*;
 
-public class RegisterUserDto {
+public class RegisterUserModel {
 
     @NotEmpty(message = "Email is required.")
     private String email;
 
-    @NotEmpty(message = "Username is required.")
-    private String username;
+    @NotEmpty(message = "first name is required.")
+    private String firstName;
+
+    @NotEmpty(message = "last name is required.")
+    private String lastName;
 
     @NotEmpty(message = "Password is required.")
     private String password;
@@ -24,12 +27,20 @@ public class RegisterUserDto {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
